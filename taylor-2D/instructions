@@ -1,0 +1,18 @@
+########################
+
+1. film_thickness_prediction
+using 95% to validate the Taylor bubble terminal state is independent on initial film thickness.
+Here the initial thickness is 0.2*R_0, so we use the correlation to accelerate the calculation to stable state.
+
+2. Initial bubble length 
+80% 1.24
+using different initial bubble length (l0=4r0,5r0,6r0,7r0,8r0,9r0) to observe the difference of terminal
+
+Calculate from 6r0, because in Araujo's study, they conclude that the bubble initial length should be at least
+3times of frontal diameters, so we calculate the cases from 6r0 to 9r0
+
+3. mesh analysis
+80% 1.24
+Try to validate the mesh independency analysis using h=1/[64,128,256,512], corresponding to grid level [10,11,12,13]
+
+4. 
