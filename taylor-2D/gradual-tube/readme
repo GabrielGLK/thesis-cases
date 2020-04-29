@@ -1,0 +1,7 @@
+This is for gradual singularities. You can change gradual degree in 'degree.h' under same expansion ratio which set in 'experiment.h'
+
+The thought of gradual singularity is:
+1). we can change expansion ratio
+2). under same expansion ratio to change gradual degree
+
+This also can be applied for gradual contraction geometries.
