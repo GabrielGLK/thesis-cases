@@ -1,0 +1,292 @@
+***************************** OUTPUT *************************************************/
+
+reset
+set grid
+set tics in font ',12' 
+set ytics 0,0.4,4.6
+set xlabel 't' font ',20
+set ylabel 'U^*' font ',20
+set key right Left opaque reverse spacing 1 font ',14' nobox 
+set style increment default
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+set arrow from 0, graph 0 to 0, graph 1 nohead lw 2 dashtype '-.-'
+set arrow from 6.3, graph 0 to 6.3, graph 1 nohead lw 2 dashtype '-.-'
+set arrow from 4.5, graph 0 to 4.5, graph 1 nohead lw 2 dashtype '-.-' lc 'red'
+p [-1:12][0:1.6]'exp_head.txt' u ($1):2 w p pt 5 lw 3 t 'U^*_{exp-head}',\
+'exp_tail.txt' u ($1):2 w p pt 4 lw 2 t 'U^*_{exp-tail}',\
+'data-2' u ($1-4.8):2  smooth bezier w l ls 1 t 'U^*_{sim-head}',\
+'data-3' every 3 u ($1-4.8):2  smooth csplines w l ls 2 t 'U^*_{sim-tail}',\
+'data-4' every 3 u ($1-4.8):2  smooth csplines w l ls 3 t 'U^*_{sim-tail center}',\
+'out-80' u ($1-4.8):6 w l ls 5 t 'U^*_{sim-mass center}'
+
+
+reset
+set grid
+set tics in font ',12' 
+set ytics 0,0.4,4.6
+set xlabel 't*' font ',15
+set ylabel 'U^*' font ',15
+set key right Left opaque reverse spacing 1 font ',14' nobox 
+set samples 100
+p [-5:10][0:1]'out-60' u ($1-6.2):6 w l lw 3 lc rgb 'red' t 'G-W: 60%',\
+'out-70' u ($1-5.5):6 w l lw 3 lc rgb 'blue' t 'G-W: 70%',\
+'out-80' u ($1-4.8):6 w l lw 3 lc rgb 'purple' t 'G-W: 80%',\
+'out-90' u ($1-14.9):6 w l lw 3 lc rgb 'black' t 'G-W: 90%',\
+'out-95' u ($1-16):6 w l lw 3 lc rgb 'green' t 'G-W: 95%'
+
+reset
+set grid
+set tics in font ',15' 
+set ytics 0,0.2,4.6
+set xlabel 't*' font ',20
+set ylabel 'U^*_{mass-center}' font ',20' offset -2
+set key right Left opaque reverse spacing 1 font ',20' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+set samples 100
+p [0:15][0.2:1.3]'out-2' u ($1-4.8):6 w l ls 2  t '{/symbol e = 1.45}',\
+'out-3' u ($1-4.8):6 w l ls 3  t '{/symbol e = 1.33}',\
+'out-4' u ($1-4.8):6 w l ls 4 t '{/symbol e = 1.24}',\
+'out-5' u ($1-4.8):6 w l ls 5 t '{/symbol e = 1.12}'
+
+
+reset
+set grid
+set tics in font ',12' enhanced
+set xlabel '(z-z_{head})/D' font ',15
+set ylabel '{/symbol t}_w/({/Symbol r}_LgD)' font ',15
+set key left Left opaque reverse spacing 1 font ',13' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+p [-5:3][-0.02:0.28]'vprof-4.8000' u ($1-8):5  smooth csplines w l ls 1  t '{/symbol D}h/D = 0',\
+'vprof-6.4000' u ($1-8):5  smooth csplines w l ls 2  t '{/symbol D}h/D = 0.5',\
+'vprof-7.9000' u ($1-8):5  smooth csplines w l ls 3  t '{/symbol D}h/D = 1',\
+'vprof-9.3000' u ($1-8):5  smooth csplines w l ls 4 t '{/symbol D}h/D = 1.5',\
+'vprof-10.8000' u ($1-8):5  smooth csplines w l ls 5  t '{/symbol D}h/D = 2'
+
+
+reset
+set grid
+set tics in font ',15' enhanced
+set xlabel 'z/D' font ',20'
+set ylabel '{/symbol t}_w/({/Symbol r}_LgD)' font ',20' offset -3
+set key left Left opaque reverse spacing 1 font ',20' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+set samples 100
+p [-3:3][-0.02:0.4]'shear-2' u ($1-8):5  smooth csplines w l ls 2 t '{/symbol e = 1.45}',\
+'shear-3' u ($1-8):5  smooth csplines w l ls 3 t '{/symbol e = 1.33}',\
+'shear-4' u ($1-8):5  smooth csplines w l ls 4 t '{/symbol e = 1.24}',\
+'shear-5' u ($1-8):5  smooth csplines w l ls 5 t '{/symbol e = 1.12}'
+
+
+reset
+set grid
+set tics in font ',15' 
+set ytics 0,0.4,4.6
+set xlabel 't^*' font ',20
+set ylabel 'L' font ',20' offset -2 
+#set arrow from 5.2, graph 0 to 5.2, graph 1 nohead lw 2 dashtype '-.-' lc 'red'
+set arrow from 5.2,graph 0 to 5.2, graph 1 nohead lw 2 dashtype '-.-' lc 'black'
+set arrow from 5.7,graph 0 to 5.7, graph 1 nohead lw 2 dashtype '-.-' lc 'black'
+set arrow from 6.3,graph 0 to 6.3, graph 1 nohead lw 2 dashtype '-.-' lc 'black'
+set arrow from 8,graph 0 to 8, graph 1 nohead lw 2 dashtype '-.-' lc 'black'
+set key right Left opaque reverse spacing 1 font ',20' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+p [0:10][1.6:4]'length-1' u ($1-4.8):2 w l ls 1 t '{/symbol e = 1.72}',\
+'length-2' u ($1-4.8):2 w l smooth csplines ls 2 t '{/symbol e = 1.45}',\
+'length-3' u ($1-4.8):2 w l ls 3 t '{/symbol e = 1.33}',\
+'length-4' u ($1-4.8):2 w l ls 4  t '{/symbol e = 1.24}',\
+'length-5' u ($1-4.8):2 w l ls 5 t '{/symbol e = 1.12}'
+
+
+
+reset
+set grid
+set tics in font ',15' 
+set xlabel 't^*' font ',20
+set ylabel 'R_F/R_{TB}' font ',20' offset -2 
+set key right Left opaque reverse spacing 1 font ',16' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+p [0:20]'curvature-70' u 1:5 smooth bezier w l ls 2 t 'G-W: 70%',\
+'curvature-80' u 1:5 smooth bezier w l ls 3 t 'G-W: 80%',\
+'curvature-90' u 1:5 smooth bezier w l ls 4 t 'G-W: 90%',\
+'curvature-95' u 1:5 smooth bezier w l ls 5 t 'G-W: 95%'
+
+reset
+set grid
+set tics in font ',15' 
+set xlabel 't^*' font ',20
+set ylabel 'R_F/R_{TB}' font ',20' offset -2 
+set key right Left opaque reverse spacing 1 font ',16' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+p [0:15]'curvature-70' u 1:5 smooth csplines w l ls 2 t '{/symbol e = 1.45}',\
+'curvature-80' u 1:5 smooth csplines w l ls 3 t '{/symbol e = 1.33}',\
+'curvature-90' u 1:5 smooth csplines w l ls 4 t '{/symbol e = 1.24}',\
+'curvature-95' u 1:5 smooth csplines w l ls 5 t '{/symbol e = 1.12}'
+
+
+reset
+set size ratio -1
+set tics in font ',20' 
+set border font ',15'
+set xtics -0.6,0.2,0.6
+set xlabel 'x' font ',25
+set ylabel 'z' font ',25' offset -2 
+unset key
+ p  'cell-3.5' u 2:1 w l lc rgb 'blue', '' u (-$2):1 w l lc rgb 'blue',\
+'interface-3.5' u 2:1 w l lw 3 lc rgb 'red','' u (-$2):1 w l lw 3 lc rgb 'red',\
+'face-3.5' u 2:1:3 w labels font ',15', '' u (-$2):1:3 w labels font ',15'
+
+
+
+reset
+set grid
+set tics in font ',15' 
+set ytics 0,0.1,1.0
+set xlabel 'Nf' font ',20
+set ylabel 'Fr' font ',20' offset -2 
+set key right Left opaque reverse spacing 1 font ',20' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+set logscale x 10
+ftitle(a,b,c,d,e) = sprintf("%4.3fr^4+%4.3fr^3+%4.3fr^2+%4.3fr+%4.3f", a,b, c, d,e)
+f(x) = a*x**4+b*x**3+c*x**2+d*x+e
+fit f(x) '12.txt' u 3:5 via a,b,c,d,e
+p '2.txt' u 3:5 w p ps 1 t '{/symbol e = 1.12}',f(x) t ftitle(a,b,c,d,e)
+
+reset
+set grid
+set tics in font ',15' 
+set xlabel '{/symbol D}_h/D' font ',20
+set ylabel '{/symbol d}_h' font ',20' offset -2 
+set key left bottom Left opaque reverse spacing 1 font ',16' nobox 
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+p [0.2:1.6][0.25:0.39] 'data-2' u ($2-8):5 w l ls 2 t '{/symbol e = 1.45}',\
+'data-3' u ($2-8):5 w l ls 3 t '{/symbol e = 1.33}',\
+'data-4' u ($2-8):5 w l ls 4 t '{/symbol e = 1.24}',\
+'data-5' u ($2-8):5 w l ls 5 t '{/symbol e = 1.12}'
+
+
+reset
+set tics in font ',15' 
+set xlabel 'z/D' font ',20
+set ylabel "p' " font ',20' offset -2 
+set key left bottom Left opaque reverse spacing 1 font ',16' nobox 
+set arrow from -4,0 rto graph 1,0 nohead lw 2 dashtype '-.-' lc 'red'
+set arrow from 0,graph 0 to 0, graph 1 nohead lw 2 dashtype '-.-' lc 'red'
+set style line 1 lt 1 lc rgb "black" lw 3 dashtype 3
+show style line
+input1 = "pressure-5.0" 
+input2 = "pressure-7.0" 
+input3 = "pressure-9.0" 
+input4 = "pressure-11.0" 
+input5 = "pressure-13.0" 
+input6 = "pressure-3.0" 
+max1 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input1))) 
+max2 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input2))) 
+max3 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input3))) 
+max4 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input4))) 
+max5 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input5))) 
+max6 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input6))) 
+p [-4:2.8][-3:1]input1 u ($1-8):($3-max1) w l ls 1 notitle,\
+input2 u ($1-8):($3-max2) w l ls 1 notitle,\
+input3 u ($1-8):($3-max3) w l ls 1 notitle,\
+input4 u ($1-8):($3-max4) w l ls 1 notitle,\
+input5 u ($1-8):($3-max5) smooth bezier w l ls 1 notitle,\
+input6 u ($1-8):($3-max6) w l ls 1 notitle
+
+reset
+set tics in font ',15' 
+set xlabel 'z/D' font ',20
+set ylabel "p' " font ',20' offset -2 
+set key left  Left opaque reverse spacing 1 font ',14' nobox 
+set arrow from -2.5,0 rto graph 1,0 nohead lw 2 dashtype '-.-' lc 'red'
+set arrow from 0,graph 0 to 0, graph 1 nohead lw 2 dashtype '-.-' lc 'red'
+set style line 1 lt 1 lc rgb "red" lw 3 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 3 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 3 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 3 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 3 dashtype 5
+show style line
+input1 = "pressure-2" 
+input2 = "pressure-3" 
+input3 = "pressure-4" 
+input4 = "pressure-5" 
+max1 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input1))) 
+max2 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input2))) 
+max3 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input3))) 
+max4 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input4))) 
+p input1 u ($1-8):($3-max1) w l ls 2 t '{/symbol e = 1.45}',\
+input2 u ($1-8):($3-max2) w l ls 3 t '{/symbol e = 1.33}',\
+input3 u ($1-8):($3-max3) w l ls 4 t '{/symbol e = 1.24}',\
+input4 u ($1-8):($3-max4) w l ls 5 t '{/symbol e = 1.12}'
+
+reset
+unset tics
+set key left  Left opaque reverse spacing 1 font ',14' nobox 
+set arrow from -2,0 rto graph 1,0 nohead lw 2 dashtype '-.-' lc 'red'
+set arrow from 0,graph 0 to 0, graph 1 nohead lw 2 dashtype '-.-' lc 'red'
+set style line 1 lt 1 lc rgb "red" lw 5 dashtype 1
+set style line 2 lt 2 lc rgb "blue" lw 10 dashtype 2
+set style line 3 lt 3 lc rgb "orange" lw 10 dashtype 3
+set style line 4 lt 4 lc rgb "green" lw 10 dashtype 4
+set style line 5 lt 5 lc rgb "black" lw 10 dashtype 5
+show style line
+unset key
+input1 = "pressure-2" 
+input2 = "pressure-3" 
+input3 = "pressure-4" 
+input4 = "pressure-5" 
+max1 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input1))) 
+max2 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input2))) 
+max3 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input3))) 
+max4 = real(system(sprintf("awk 'BEGIN {max = -100000} {if (NR > 1 && $3 > max) max = $3} END {print max}' %s", input4))) 
+p [-0.1:0.1][-1.1:-0.4]input1 u ($1-8):($3-max1) w l ls 2 t '{/symbol e = 1.45}',\
+input2 u ($1-8):($3-max2) w l ls 3 t '{/symbol e = 1.33}',\
+input3 u ($1-8):($3-max3) w l ls 4 t '{/symbol e = 1.24}',\
+input4 u ($1-8):($3-max4) w l ls 5 t '{/symbol e = 1.12}'
+
+
+
