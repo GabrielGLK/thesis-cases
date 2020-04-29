@@ -1,0 +1,1 @@
+#define degree 10
