@@ -1,0 +1,6 @@
+change degree and expansion/contraction ratio
+-> you can get different cases
+
+One thing needs to be noted:
+In Basilisk or other solvers, it's difficult ot adapt curved surface or lines, therefore, here 
+we used refine mesh method, trying to make the simulation reality.
