@@ -172,7 +172,7 @@ event projection(i++){
   smoother( div_new, div_1);
   smoother( div_1, div_new );
 
-  project_pc(uf,p,alpha,dt,4,div_new); // using new mass source term
+  project_pc(uf,p,alpha,dt,4,div_pc); // using new mass source term
   
   centered_gradient (p, g);
 
@@ -194,7 +194,7 @@ event projection(i++){
   // solve pressure equation with phase change velocity divergence
   scalar divv[];
   foreach(){
-    divv[] = div_new[];
+    divv[] = div_pc[];
     divv[] /= dt;
   }
   poisson (p_new, divv, alpha, tolerance = TOLERANCE/sq(dt), nrelax = 2);
