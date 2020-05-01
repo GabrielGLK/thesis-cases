@@ -1,0 +1,7 @@
+This code can be used to calculate the cases in the reference paper:
+
+Simulation of slug flow systems under laminar regime: Hydrodynamics with individual and a pair of consecutive Taylor bubbles
+
+One more idea can be used here is using viscoelastic fluid to recalculate the cases, 
+in Basilisk solver, you can set viscoelastic properties here:
+http://basilisk.fr/src/test/poiseuille-oldroydb.c
