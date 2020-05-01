@@ -8,11 +8,11 @@
 #define reference 0
 
 
-#define case_1 0
+#define case_1 1
 #define case_2 0
 #define case_3 0
 #define case_4 0
-#define case_5 1
+#define case_5 0
 #define case_6 0
 #define case_7 0
 #define case_8 0
