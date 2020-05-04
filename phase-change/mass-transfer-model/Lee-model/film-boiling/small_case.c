@@ -45,7 +45,7 @@ T_V[bottom] = dirichlet(T_wall);
 
 p[top] = dirichlet(0.);
 u.n[top] = neumann(0.);
-p_new[top] = dirichlet(0.);
+p_new[bottom] = dirichlet(0.);
 
 uf.n[left] = 0;
 uf.n[right] = 0;
