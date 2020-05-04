@@ -1,0 +1,26 @@
+view (fov = 27.7778, quat = {0,0,0,1}, tx = -0.499866, ty = -0.504786, bg = {1,1,1}, width = 600, height = 600, samples = 1);
+draw_vof("f")
+save("0.svg")
+
+view (fov = 27.7778, quat = {0,0,0,1}, tx = -0.499866, ty = -0.504786, bg = {1,1,1}, width = 600, height = 600, samples = 1);
+draw_vof("f")
+save("1.svg")
+
+view (fov = 27.7778, quat = {0,0,0,1}, tx = -0.499866, ty = -0.504786, bg = {1,1,1}, width = 600, height = 600, samples = 1);
+draw_vof("f")
+save("2.svg")
+
+view (fov = 27.7778, quat = {0,0,0,1}, tx = -0.499866, ty = -0.504786, bg = {1,1,1}, width = 600, height = 600, samples = 1);
+draw_vof("f")
+save("3.svg")
+
+view (fov = 27.7778, quat = {0,0,0,1}, tx = -0.499866, ty = -0.504786, bg = {1,1,1}, width = 600, height = 600, samples = 1);
+draw_vof("f")
+save("4.svg")
+
+view (fov = 27.7778, quat = {0,0,0,1}, tx = -0.499866, ty = -0.504786, bg = {1,1,1}, width = 600, height = 600, samples = 1);
+draw_vof("f")
+save("5.svg")
+
+
+box(notics=true,lw=2)
