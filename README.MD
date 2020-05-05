@@ -20,6 +20,14 @@ The <a href ="https://github.com/GabrielGLK/thesis-cases/tree/master/Basilisk-te
 ## 3D benchmark test cases
 - <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/Basilisk-test-cases/single-bubble/3D/case-1/rising.c" > case-1 </a>
 - <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/Basilisk-test-cases/single-bubble/3D/case-2/rising.c" > case-2 </a>
+
+## a pair of bubbles rising in stagnant liquid
+- <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/Basilisk-test-cases/single-bubble/2D/a-pair-bubbles" > case-1 </a>, with this test cases, we can analyze a pair of bubbles rising in stagnant liquid, moreover, we can change the size and distance of the two bubbles.
+
+## zig-zag single bubble rising
+This test case is an example case in Basilisk, see: <a href = "http://basilisk.fr/src/examples/bubble.c" > bubble motion in tank </a>
+
+
 # **Numerical simulation of Taylor bubble rising in stagnant liquid** 
 In this part, we introduce the test cases using Basilisk to simulate Taylor bubble rising in quiescent liquid through singularities. The comparisons have been done between experiments results from Chengsi and simulations results, including bubble rising in straight tube and expansion/contraction tube.
 
