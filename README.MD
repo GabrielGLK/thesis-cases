@@ -1,6 +1,10 @@
 # Basilisk solver installation #
 git tip: *git config --global credential.helper store* -> not need input account and password everytime
+div {
 
+background:rgba(255,0,0,0.5);
+
+}
 <a href = "http://basilisk.fr/src/INSTALL" > Install Basilisk solver </a>
 
 <a href = "http://basilisk.fr/src/view.h" > Install Basilisk view </a>
