@@ -19,7 +19,7 @@ mgstats mgd;
 
 #define Re 35
 #define Eo 10
-#define RHOR 1000.
+#define RHOR 10.
 #define MUR 10.
 
 #define minlevel 6
