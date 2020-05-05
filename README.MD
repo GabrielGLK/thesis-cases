@@ -22,7 +22,7 @@ The <a href ="https://github.com/GabrielGLK/thesis-cases/tree/master/Basilisk-te
 - <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/Basilisk-test-cases/single-bubble/3D/case-2/rising.c" > case-2 </a>
 
 ## a pair of bubbles rising in stagnant liquid
-- <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/Basilisk-test-cases/single-bubble/2D/a-pair-bubbles" > case-1 </a>, with this test cases, we can analyze a pair of bubbles rising in stagnant liquid, moreover, we can change the size and distance of the two bubbles.
+- <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/Basilisk-test-cases/single-bubble/2D/a-pair-bubbles" > multiple bubbles motion </a>, with this test cases, we can analyze a pair of bubbles rising in stagnant liquid, moreover, we can change the size and distance of the two bubbles.
 
 ## zig-zag single bubble rising
 This test case is an example case in Basilisk, see: <a href = "http://basilisk.fr/src/examples/bubble.c" > bubble motion in tank </a>
