@@ -20,12 +20,12 @@ mgstats mgd;
 #define Re 35
 #define Eo 10
 #define RHOR 1000.
-#define MUR 10.
+#define MUR 100.
 
 #define minlevel 6
 #define maxlevel 11
 
-#define MAXTIME 2.1
+#define MAXTIME 6.1
 #define L0 2
 
 p[right] = dirichlet(0.);
@@ -48,7 +48,7 @@ int main (){
   rho2 = 1./RHOR;
   mu1 = 10;
   mu2 = mu1/MUR;
-  f.sigma = 24.5; 
+  f.sigma = 1./Eo; 
   TOLERANCE = 1e-4;
   #if REDUCED
     G.x -= 0.98;
