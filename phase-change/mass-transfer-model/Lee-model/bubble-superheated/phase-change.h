@@ -11,6 +11,28 @@ attribute {
   double rho;
 }
 
+// delta_s function
+void delta_magnini(scalar f, scalar delta ) {
+
+  foreach()  {
+    f[] = clamp(f[], 0., 1.);
+    double df, df2;
+    df2 = 0.;
+    foreach_dimension () {
+      df = (f[-1,1] + 2*f[0,1] + f[1,1] - f[-1,-1] - 2*f[0,-1] - f[1,-1])/(8*Delta);
+      df2 += sq(df);
+    }
+    delta[] = sqrt(df2);
+  }
+  boundary({delta});
+}
+
+void smoother(scalar fr, scalar ff) {
+  foreach()  
+    ff[] = (fr[-1,1] + 2*fr[-1,0] + fr[-1,-1] + fr[1,1] + 2*fr[1,0] + fr[1,-1] + 2*fr[0,1] + 4*fr[0,0] + 2*fr[0,-1])/16;
+  boundary({fr,ff});
+}
+
 /****************** Lee-model****************************/
 void lee_mass(scalar f, scalar tr, scalar m, double L_h){
 
@@ -22,7 +44,7 @@ void lee_mass(scalar f, scalar tr, scalar m, double L_h){
   {
     if(f[]>1e-12&&f[]<1-1e-12)
       {
-        r_i[] = tr.lambda*tr.tr_eq/(L_h*(0.5+0.5*f[])*Delta*f[]*rho1);//mass transfer intensity factor expression
+        r_i[] = 0.07*tr.tr_eq/(L_h*(0.5+0.5*f[])*Delta*f[]*rho1);//mass transfer intensity factor expression
         // An explicit expression of the empirical factor in a widely used phase change model
         m[] = r_i[]*f[]*rho1*(tr[] - tr.tr_eq)/tr.tr_eq;
       }

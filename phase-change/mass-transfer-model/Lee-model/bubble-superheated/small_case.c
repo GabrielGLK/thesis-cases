@@ -38,7 +38,7 @@ scalar div_2[];       // liquid velocity divergence
 scalar p_new[];
 
 /*********************************** temperature tracers **************************************/
-scalar T_V[], T_L[], *tracers = {T_V, T_L}; // vapor and liquid temp and use tracer.h to advect them
+scalar T[], *tracers = {T}; // vapor and liquid temp and use tracer.h to advect them
 
 /************************************ boundary conditions **************************************/
 // outflow boundary conditions on heated wall
@@ -75,17 +75,16 @@ int main() {
 
 //#define H0 L0/(1>>level)
 #define rhoo (1/rho2 - 1/rho1)
-event init (t = 0) {
+event init (t = 0.5) {
   fraction (f,  sq(x) + sq(y) - sq(0.12));
  
   foreach(){
-    T_V[] = (1-f[])*T_wall;
-    T_L[] = f[]*T_sat;
+    T[] = (1-f[])*T_sat + f[]*T_wall;
   }
   foreach_face(){
     uf.x[] = 0.;
 }
-  boundary({T_L, T_V, uf});
+  boundary({T, uf});
 
   CFL = 0.2;
   }
@@ -93,28 +92,20 @@ event init (t = 0) {
 /************************ define mass source *******************************/
 scalar velocity[];     // velocity magnitude
 scalar m_dot[];
-scalar div_pc[];
+scalar div_pc[],delta_s[];
 
 event stability(i++)   // executed before vof and ns events
 {
-  //dtmax = 0.002;
-  T_L.rho = rho1;
-  T_V.rho = rho2;
-  T_L.lambda = lambda_1;
-  T_V.lambda = lambda_2;
-  T_L.inverse = true;
-  T_V.inverse = false;
-  for(scalar t in tracers)
-    {
-      t.tr_eq = T_sat;
-      lee_mass(f,t,m_dot,L_h);
-      foreach()
-        m_dot[] *= 10;
-      boundary({m_dot});
-      mass_diffusion(div_pc,f,m_dot); //Hardt method
-    }
-  
 
+  T.tr_eq = T_sat;
+  lee_mass(f,T,m_dot,L_h);
+  /*
+  delta_magnini(f,delta_s);
+  foreach()
+    div_pc[] = m_dot[]*delta_s[];*/
+  mass_diffusion(div_pc,f,m_dot); //Hardt method
+  boundary({div_pc});
+  
   // compute velocity magnitude
   foreach()
     velocity[] = sqrt(sq(u.x[]) + sq(u.y[]));
@@ -126,40 +117,33 @@ event vof(i++)
 {
 
 /******************* step-2: shift interface accounting for phase-change *******************/  
-  //foreach()
-  //{
-    //double f_old = f[];
+foreach()
+  {
+    if(f[]>1e-12&&f[],1-1e-12)
+    {
    /* Note that VOF function is clipped when the interface displacement extends beyond the cell boundary.
    * This could be solved by addig the clipped value to neighbouring cells. */
-    //coord n = interface_normal( point, f); // interface normal
-     // double alpha = plane_alpha(f[],n); // distance from original point to interface 
-     // alpha -= m_dot[]*dt/(rho1*Delta)*sqrt(sq(n.x)+sq(n.y)); // phase-change shifting distance
-     // f[] = line_area(n.x,n.y,alpha); // cell volume fraction for n+1
- // }
- T_V.inverse = false;
- T_L.inverse = true;
- for(scalar t in tracers)
-  {
-    foreach()
-      if(f[]>1e-12&&f[]<1-1e-12)
-        f[] -= (t.inverse?1:-1)*m_dot[]*dt/t.rho;
-  }
-  boundary({f});
+      coord n = interface_normal( point, f); // interface normal
+      double alpha = plane_alpha(f[],n); // distance from original point to interface 
+      alpha -= m_dot[]*dt/(rho1*Delta)*sqrt(sq(n.x)+sq(n.y)); // phase-change shifting distance
+      f[] = line_area(n.x,n.y,alpha); // cell volume fraction for n+1
+    }
+ }
+
+ boundary({f});
+
 }
 
 event tracer_diffusion(i++){
-  T_V.tr_eq = T_sat;
-  T_L.tr_eq = T_sat;
-  T_L.D = D_L;
-  T_V.D = D_V;
-  T_L.rho = rho1;
-  T_V.rho = rho2;
-  T_L.cp = cp_1;
-  T_V.cp = cp_2;
-  T_L.inverse = false;
-  T_V.inverse = true;
-  for(scalar t in tracers)
-    heat_source (t, f, div_pc, L_h);
+  foreach()
+  {
+    T.D = D_L*f[] + (1-f[])*D_V;
+    T.rho = rho1*f[] + (1-f[])*rho2;
+    //T.cp = cp_1*f[] + (1-f[])*cp_2;
+    T.cp = (rho1*f[]*cp_1 + rho2*(1-f[])*cp_2)/(rho1*f[]+rho2*(1-f[]));
+  }
+  heat_source (T, f, div_pc, L_h);
+
 }
 
 // first approximation projection method after prediction of face velocity to compute advection velocity, this step also considers mass source due to projection step
@@ -228,7 +212,7 @@ void mg_print (mgstats mg)
 }
 
 
-event logfile (t = 0; t <= 3; t += 0.01) {
+event logfile (t = 0.5; t <= 3; t += 0.01) {
 
   double xb = 0., vx = 0.,vy = 0., sb = 0.,yb = 0., nu = 0.;
   foreach(reduction(+:xb) reduction(+:vx) reduction(+:sb) reduction(+:yb) reduction(+:vy) reduction(+:nu)) {
@@ -259,11 +243,7 @@ event snap (t=0;t += 0.1)
  }
 
 
-event movies (t = 0; t <= 3; t += 0.01) {
-scalar T[];
-  foreach()
-    T[] = f[]*T_L[] + (1. - f[])*T_V[];
-  boundary ({T});
+event movies (t = 0.5; t <= 3; t += 0.01) {
   
   foreach()
     f[] = clamp(f[], 0., 1.);
