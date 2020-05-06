@@ -19,18 +19,17 @@ mgstats mgd;
 
 #define Re 35
 #define Eo 10
-#define RHOR 1000.
-#define MUR 100.
+#define RHOR 10.
+#define MUR 10.
 
-#define minlevel 6
-#define maxlevel 11
+#define minlevel 7
+#define maxlevel 9
 
 #define MAXTIME 6.1
 #define L0 2
 
-p[right] = dirichlet(0.);
-pf[right] = dirichlet(0.);
-u.n[right] = neumann(0);
+u.t[right] = dirichlet(0);
+u.t[left]  = dirichlet(0);
 
 uf.n[bottom] = 0.;
 uf.n[top] = 0.;
@@ -45,13 +44,13 @@ int main (){
   init_grid(N);
 
   rho1 = 1000.;
-  rho2 = 1./RHOR;
+  rho2 = 100;
   mu1 = 10;
-  mu2 = mu1/MUR;
-  f.sigma = 1./Eo; 
+  mu2 = 1;
+  f.sigma = 24.5; 
   TOLERANCE = 1e-4;
   #if REDUCED
-    G.x -= 0.98;
+    G.x = -0.98;
   #endif
     run();
 }
