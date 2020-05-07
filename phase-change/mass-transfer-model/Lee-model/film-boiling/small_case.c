@@ -29,7 +29,7 @@ double maxruntime = HUGE;
 #define lambda_2 1
 #define D_L lambda_1/(rho1*cp_1)
 #define D_V lambda_2/(rho2*cp_2)
-#define L_h 1e4
+double L_h = 1e4;
 
 face vector u_l[];    // liquid face velocity
 face vector uf_new[];
@@ -42,8 +42,9 @@ scalar T_V[], T_L[], *tracers = {T_V, T_L}; // vapor and liquid temp and use tra
 
 /************************************ boundary conditions **************************************/
 T_V[bottom] = dirichlet(T_wall);
-
+T_L[top] = dirichlet(T_sat);
 p[top] = dirichlet(0.);
+pf[top] = dirichlet(0.);
 u.n[top] = neumann(0.);
 p_new[bottom] = dirichlet(0.);
 
@@ -101,6 +102,8 @@ event stability(i++)   // executed before vof and ns events
   T_V.rho = rho2;
   T_L.lambda = lambda_1;
   T_V.lambda = lambda_2;
+  T_L.inverse = true;
+  T_V.inverse = false;
   for(scalar t in tracers)
     {
       t.tr_eq = T_sat;
@@ -116,7 +119,7 @@ event stability(i++)   // executed before vof and ns events
 }
 
 
-event vof(i++)
+event vof_1(i++)
 {
 
 /******************* step-2: shift interface accounting for phase-change *******************/  
@@ -125,12 +128,14 @@ event vof(i++)
     double f_old = f[];
    /* Note that VOF function is clipped when the interface displacement extends beyond the cell boundary.
    * This could be solved by addig the clipped value to neighbouring cells. */
-if(interfacial(point,f))
-      {coord n = interface_normal( point, f); // interface normal
+    if(interfacial(point,f))
+      {
+      coord n = interface_normal( point, f); // interface normal
       double alpha = plane_alpha(f[],n); // distance from original point to interface 
       alpha -= m_dot[]*dt/(rho1*Delta)*sqrt(sq(n.x)+sq(n.y)); // phase-change shifting distance
       f[] = line_area(n.x,n.y,alpha); // cell volume fraction for n+1
-  }
+    }
+    //f[] -= dt*m_dot[]/rho1;
   }
   boundary({f});
 }
@@ -147,7 +152,10 @@ event tracer_diffusion(i++){
   T_L.inverse = false;
   T_V.inverse = true;
   for(scalar t in tracers)
-    heat_source (t, f, m_dot, L_h);
+    {
+      heat_source (t, f, div_pc, L_h);
+      //dirichlet_diffusion(t,f,level,dt,10);
+    }
 }
 
 // first approximation projection method after prediction of face velocity to compute advection velocity, this step also considers mass source due to projection step
