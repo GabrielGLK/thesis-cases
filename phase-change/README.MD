@@ -25,7 +25,7 @@ The objective of this section is to develop phase-change models in Basilisk solv
 In this section, we introduce several mass transfer models in order to calculate mass flux at the interface. The mass transfer models are all implemented in Basilisk solver.
     - The Lee model  
         The model is the simplest mass transfer model. There is an intensity factor we need to change for different phase change phenomenon. #This is important and I will give the values for different physical problems later#. See the <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/Lee-model"> reference </a> and <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L112"> code </a>.
-    - The Tanasawa model
+    - The Tanasawa model  
         This model is a simplified expression of schrage model. Similar to the Lee model, there is an mass transfer efficient needs to be defined, the difference is this model computes mass flux from the view of molecular dynamic. See the <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/schrage-model"> reference </a> and <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L148"> code </a>.
 ## Solving energy equation
 ## Solving Navier-Stokes equations with phase change
