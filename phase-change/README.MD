@@ -13,7 +13,7 @@ The objective of this section is to develop phase-change models in Basilisk solv
 
         - Interface advecting with an extended, divergence free liquid velocity for the entire domain.  
             A little difference with Leon's mehod is we extend the liquid domain into entire domain, which is more easier to implement in Basilisk. 
-        - Shifting the interface to account for phase change
+        - Shifting the interface to account for phase change  
             Many people just add source term in the RHS of the VOF equation, we can also use this way. Another method is to reconstruct interface after mass source.
     - Adding mass flux in Poisson projection step  
         The mass continuity is changed due to phase change, which would affect the expression for solving pressure and velocity using projection method. We need to add this term in the RHS of projection step to indicate mass transfer at interface. See the <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/poisson-pc.h#L518" > code  </a> ).
@@ -24,9 +24,9 @@ The objective of this section is to develop phase-change models in Basilisk solv
 - Mass transfer models  
 In this section, we introduce several mass transfer models in order to calculate mass flux at the interface. The mass transfer models are all implemented in Basilisk solver.
     - The Lee model  
-        The Lee model is the simplest mass transfer model. There is an intensity factor we need to change for different phase change phenomenon. See the <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/Lee-model"> reference </a> and <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L112"> code </a>.
+        The model is the simplest mass transfer model. There is an intensity factor we need to change for different phase change phenomenon. #This is important and I will give the values for different physical problems later#. See the <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/Lee-model"> reference </a> and <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L112"> code </a>.
     - The Tanasawa model
-        This model is a simplified of schrage model. 
+        This model is a simplified expression of schrage model. Similar to the Lee model, there is an mass transfer efficient needs to be defined, the difference is this model computes mass flux from the view of molecular dynamic. See the <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/schrage-model"> reference </a> and <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L148"> code </a>.
 ## Solving energy equation
 ## Solving Navier-Stokes equations with phase change
         
