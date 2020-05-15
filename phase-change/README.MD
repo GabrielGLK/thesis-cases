@@ -15,6 +15,9 @@ The objective of this section is to develop phase-change models in Basilisk solv
             A little difference with Leon's mehod is we extend the liquid domain into entire domain, which is more easier to implement in Basilisk. 
         - Shifting the interface to account for phase change
             Many people just add source term in the RHS of the VOF equation, we can also do by this way. Another method is to reconstruct interface after mass source.
+    - Adding mass flux in Poisson projection step
+        The mass continuity is changed due to phase change, which would affect the expression for solving pressure and velocity using projection method. We need to add this term in the RHS of projection step to indicate mass transfer at interface. See the <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/poisson-pc.h#L518" > code  </a> ).
+    
 ```diff
-- this will be highlighted in red
+- Problem in constant mass flux
         
