@@ -33,6 +33,9 @@ In this section, we introduce several mass transfer models in order to calculate
         There are also some other mass transfer models, such as [Ratter](https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/Lee-model/Rattner%20model) model, [Sun](https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/other-models/2/Sun%20%E7%AD%89%E3%80%82%20-%202014%20-%20Modeling%20of%20the%20Evaporation%20and%20Condensation%20Phase.pdf)'s model which are easy to implement. However, we expect to finish Leon Malan's general mass flux model in Basilisk.
 ## Solving energy equation
 In Basilisk, we solve the advection of passive scalar, such as temperature, using [tracer.h](http://basilisk.fr/src/tracer.h), which is solved by BCG scheme in spacial and first Euler explicit scheme in time. The diffusion of passive tracers uses [diffusion.h](http://basilisk.fr/src/diffusion.h), which is solved by multigrid [poisson](http://basilisk.fr/src/poisson.h) solver in space and first Euler implicit scheme. We can treat heat source term in [diffusion.h](http://basilisk.fr/src/diffusion.h) by several methods.
-- Equilibrium thermal heat transfer
+- **Equilibrium thermal heat transfer model**  
+This model is inspired from Ratter model and Quentin's evaporation model. The objective is to keep the interfacial cell saturated temperature. Therefore, in each diffusion time, the extral temperature will be removed from interface.
+- **Ghost cell model**  
+In [zhang](https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/sharp-interface-model/Zhang%20%E5%92%8C%20Ni%20-%202018%20-%20Direct%20numerical%20simulations%20of%20incompressible%20mul.pdf)'s paper, they used one called ghost cell method to impose the neighboring cells of interface in saturated phase saturated state. As see in the Figure ![here](https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/figure/ghost_cell_method.pdf).
 ## Solving Navier-Stokes equations with phase change
         
