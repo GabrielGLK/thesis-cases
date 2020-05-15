@@ -21,7 +21,12 @@ The objective of this section is to develop phase-change models in Basilisk solv
     - Problem in constant mass flux  
         - As <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/sharp-interface-model/Zhang%20%E5%92%8C%20Ni%20-%202018%20-%20Direct%20numerical%20simulations%20of%20incompressible%20mul.pdf" > Zhang </a>'s conclusion using Gerris, large density ratio will cause interface instability, they used <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/schrage-model/Hardt%20and%20Wondra%20-%202008%20-%20Evaporation%20model%20for%20interfacial%20flows%20based%20on%20a.pdf" > Hardt </a>'s mass diffusion model to solve this problem. See the <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L76"> code </a>.  
         - Another method we tried is using delta function to impose the mass flux at interface and used smoothed method for mass flux. see <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/schrage-model/Hardt%20and%20Wondra%20-%202008%20-%20Evaporation%20model%20for%20interfacial%20flows%20based%20on%20a.pdf" > Hardt </a>'s mass diffusion model to solve this problem. See the <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L52"> code </a>.
-- Mass transfer models
+- Mass transfer models  
+In this section, we introduce several mass transfer models in order to calculate mass flux at the interface. The mass transfer models are all implemented in Basilisk solver.
+    - The Lee model  
+        The Lee model is the simplest mass transfer model. There is an intensity factor we need to change for different phase change phenomenon. See the <a href = "https://github.com/GabrielGLK/thesis-cases/tree/master/reference-papers/phase-change/mass-transfer-model/Lee-model"> reference </a> and <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/phase-change.h#L112"> code </a>.
+    - The Tanasawa model
+        This model is a simplified of schrage model. 
 ## Solving energy equation
 ## Solving Navier-Stokes equations with phase change
         
