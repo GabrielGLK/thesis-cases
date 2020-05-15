@@ -18,7 +18,6 @@ The objective of this section is to develop phase-change models in Basilisk solv
     - Adding mass flux in Poisson projection step
         The mass continuity is changed due to phase change, which would affect the expression for solving pressure and velocity using projection method. We need to add this term in the RHS of projection step to indicate mass transfer at interface. See the <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/phase-change/test_cases/phase_change_code/poisson-pc.h#L518" > code  </a> ).
     
-```diff
-- Problem in constant mass flux
-As <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/sharp-interface-model/Zhang%20%E5%92%8C%20Ni%20-%202018%20-%20Direct%20numerical%20simulations%20of%20incompressible%20mul.pdf" > Zhang </a>'s conclusion using Gerris, large density ratio will cause interface instability, they used <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/schrage-model/Hardt%20and%20Wondra%20-%202008%20-%20Evaporation%20model%20for%20interfacial%20flows%20based%20on%20a.pdf" > Hardt </a>'s mass diffusion model to solve this problem.
+    - Problem in constant mass flux
+        As <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/sharp-interface-model/Zhang%20%E5%92%8C%20Ni%20-%202018%20-%20Direct%20numerical%20simulations%20of%20incompressible%20mul.pdf" > Zhang </a>'s conclusion using Gerris, large density ratio will cause interface instability, they used <a href = "https://github.com/GabrielGLK/thesis-cases/blob/master/reference-papers/phase-change/mass-transfer-model/schrage-model/Hardt%20and%20Wondra%20-%202008%20-%20Evaporation%20model%20for%20interfacial%20flows%20based%20on%20a.pdf" > Hardt </a>'s mass diffusion model to solve this problem.
         
