@@ -41,7 +41,7 @@ void mass_source(scalar f, scalar m)
   foreach()
   {
     if(f[]>1e-12&&f[]<1 - 1e-12)
-      m[] = 0;
+      m[] = 0.5;
     else
       m[] = 0;
   }
@@ -148,14 +148,10 @@ void lee_mass(scalar tr, scalar f, scalar m, double L_h){
   scalar r_i[];
   foreach()
   {
-    if(f[]>1e-12&&f[]<1-1e-12)
-      {
-      r_i[] = 40*tr.tr_eq/(L_h*(0.5+0.5*f[])*Delta*f[]*rho1);//mass transfer intensity factor expression
-      // An explicit expression of the empirical factor in a widely used phase change model
-      m[] = 0.55*r_i[]*rho1*f[]*(tr[] - tr.tr_eq)/tr.tr_eq;
-      }
-    else
-      m[] = 0;
+    r_i[] = 27.2*tr.tr_eq/(L_h*(0.5+0.5*f[])*Delta*f[]*rho1);//mass transfer intensity factor expression
+
+    if(interfacial(point,f))
+      m[] = 1*rho1*(f[] + f[1])/2*(tr[] - tr.tr_eq)/tr.tr_eq;
   }
   boundary({m});
 }
@@ -168,16 +164,16 @@ void tanasawa_model (scalar tr, scalar f, scalar m_dot,  double L_h)
   foreach()
     f[] = clamp(f[], 0., 1.);
   boundary({f});
-  double r = 0.32;// because we don't know the liquid molecular weight, so we give the guess of mass transfer intensity multipy liquid molecular weight
+  //double a = 0.2;// because we don't know the liquid molecular weight, so we give the guess of mass transfer intensity multipy liquid molecular weight
+  double b = 0.01;
   foreach()
   {
-    if(f[]>1e-12&&f[]<1-1e-12)
+    if(interfacial(point,f))
       {
-        m_dot[] = cm[]*(2*r/(2-r))*sqrt(1/(2*pi*8.314))*(rho2*L_h*(tr[] - tr.tr_eq))/(pow(tr.tr_eq,3/2));
-      }
-    else
-      {
-        m_dot[] = 0;
+        if(f[] != f[1])
+          m_dot[] = cm[]*(2*b/(2-b))*sqrt(18/(2*pi*8.314))*(rho2*L_h*(tr[] - tr.tr_eq))/(pow(tr.tr_eq,3/2));
+        else
+          m_dot[] = 0;
       }
     }
   boundary({m_dot});
@@ -202,7 +198,7 @@ void zhang_model (scalar tr, scalar f, scalar m, double L_h)
       double alpha  = plane_alpha (f[], n); // distance in liquid portion in interfacial cell
       plane_area_center(q, alpha_new, &s);// interface center
       double xc = 0, yc = 0;
-      double delta_d = 1.6;// according to the paper, this value is between 1 and 2
+      double delta_d = 1;// according to the paper, this value is between 1 and 2
       if(interfacial(point,f))
         {
           xc += s.x*Delta-n.x*delta_d*Delta;
@@ -239,7 +235,7 @@ void zhang_model_1 (scalar tr, scalar f, scalar m, double L_h)
       double alpha  = plane_alpha (f[], n);
       plane_area_center(n, alpha, &s);
       double xc = 0, yc = 0;
-      double delta_d = 1.6;// according to the paper, this value is between 1 and 2
+      double delta_d = 1.5;// according to the paper, this value is between 1 and 2
       if(interfacial(point,f))
         {
           xc += s.x*Delta-n.x*delta_d*Delta;
@@ -437,7 +433,7 @@ void Malan (scalar tr, scalar f, scalar m, double L_h)
         }
         
     }
-    m[] *= 0.85*tr.lambda/L_h;
+    m[] *= tr.lambda/L_h;
   }
   boundary({m});
 }
@@ -675,7 +671,7 @@ void sharp_simple_model (scalar tr, scalar f, scalar temp,  face vector v_pc, do
 
   vector n[];
   compute_normal (f, n);
-  
+ 
   foreach_face() {
     v_pc.x[] = 0.;
 
@@ -709,15 +705,30 @@ void sharp_simple_model (scalar tr, scalar f, scalar temp,  face vector v_pc, do
     }
   } 
   boundary((scalar *){v_pc});
+ 
   scalar dd[];
+  face vector f_v[];
+  foreach_face()
+    {
+      dd[] = 1 - f[];
+      f_v.x[] = (dd[1] - dd[-1])/(2*Delta);
+    }
+  boundary((scalar *){f_v});
+
+ /*
+  foreach_face()
+  {
+    v_pc.x[] = (tr[1] - tr[-1])/(2*Delta);
+  }
+  boundary((scalar *){v_pc}); */
   foreach()
     {
       dd[] = 1 - f[];
       temp[] = 0;
       foreach_dimension()
         {
-          if(interfacial(point,f))
-            temp[] += v_pc.x[]*(dd[1] - dd[-1])/(Delta*L_h);
+          if(f[]>1e-12&&f[]<1-1e-12)
+            temp[] += 0.7*0.025*v_pc.x[]*f_v.x[]/L_h;
           else
             temp[] += 0;
       }
